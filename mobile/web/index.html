@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0a0f14">
+  <meta name="description" content="AI Teacher Intelligence — fast teacher workflows for students, assessment, attendance and AI-assisted checking.">
+  <link rel="manifest" href="./manifest.webmanifest"><link rel="icon" type="image/png" sizes="64x64" href="./favicon-64.png"><link rel="apple-touch-icon" href="./apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="AI Teacher">
+  <link rel="stylesheet" href="./app.css">
+  <title>AI Teacher Intelligence</title>
+</head>
+<body>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <section id="login" class="login-shell">
+    <div class="login-panel">
+      <div class="login-brand"><img class="brand-symbol brand-image" src="./icon-192.png" alt="AI Teacher Intelligence"><div><strong>AI Teacher</strong><span>Intelligence</span></div></div>
+      <div class="eyebrow">Teacher workspace</div>
+      <div class="auth-heading-row"><div><h1 id="auth-title">Welcome back.</h1><p id="auth-lead" class="lead">Sign in to your private teaching workspace.</p></div><div class="secure-badge"><span></span> Secure workspace</div></div>
+      <div class="auth-tabs" role="tablist" aria-label="Account access"><button id="signin-tab" class="auth-tab active" type="button" role="tab" aria-selected="true">Sign in</button><button id="signup-tab" class="auth-tab" type="button" role="tab" aria-selected="false">Create account</button></div>
+      <form id="login-form" class="stack">
+        <label>Email<input id="email" type="email" autocomplete="username" placeholder="you@example.com" required></label>
+        <label>Password<input id="password" type="password" autocomplete="current-password" placeholder="Password" required></label>
+        <button class="primary xl" type="submit"><span>Sign in</span><span class="btn-arrow">→</span></button>
+      </form>
+      <form id="signup-form" class="stack hidden">
+        <div class="form-grid compact-grid">
+          <label class="full">Full name<input id="signup-name" type="text" autocomplete="name" placeholder="Your full name" required></label>
+          <label class="full">School or workspace name<input id="signup-school" type="text" autocomplete="organization" placeholder="e.g. Sheger Ifa Boru School" required></label>
+          <label>Email<input id="signup-email" type="email" autocomplete="email" placeholder="you@example.com" required></label>
+          <label>Password<input id="signup-password" type="password" autocomplete="new-password" placeholder="At least 10 characters" required></label>
+          <label>Confirm password<input id="signup-password-confirm" type="password" autocomplete="new-password" placeholder="Repeat password" required></label>
+        </div>
+        <button class="primary xl" type="submit"><span>Create workspace</span><span class="btn-arrow">→</span></button>
+      </form>
+      <div id="login-error" class="error" role="alert"></div>
+      <div class="login-foot">Your workspace starts empty. You add the classes, students and assessments.</div>
+    </div>
+  </section>
+
+  <div id="app" class="app-shell hidden">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <img class="brand-symbol brand-image" src="./icon-192.png" alt="AI Teacher Intelligence">
+        <div class="brand-copy"><strong>AI Teacher</strong><span>Intelligence</span></div>
+      </div>
+      <div class="workspace-label">Workspace</div>
+      <nav id="nav" class="nav-list" aria-label="Main navigation">
+        <button class="nav active" data-view="home"><span class="nav-icon" data-icon="home"></span><span>Today</span><span class="nav-count" id="nav-today-count">0</span></button>
+        <button class="nav" data-view="students"><span class="nav-icon" data-icon="users"></span><span>Students</span><span class="nav-count" id="nav-students-count">0</span></button>
+        <button class="nav" data-view="scores"><span class="nav-icon" data-icon="score"></span><span>Assessments</span></button>
+        <button class="nav" data-view="checker"><span class="nav-icon" data-icon="scan"></span><span>AI Checker</span></button>
+        <button class="nav" data-view="attendance"><span class="nav-icon" data-icon="calendar"></span><span>Attendance</span></button>
+        <button class="nav" data-view="analytics"><span class="nav-icon" data-icon="chart"></span><span>Analytics</span></button>
+        <button class="nav" data-view="reports"><span class="nav-icon" data-icon="file"></span><span>Reports</span></button>
+        <button class="nav" data-view="settings"><span class="nav-icon" data-icon="settings"></span><span>Setup</span></button>
+      </nav>
+      <div class="sidebar-foot">
+        <div class="account-mini"><div id="user-avatar" class="avatar avatar-sm">T</div><div><div id="user-name" class="user-name">Teacher</div><div id="school-name" class="muted small">My School</div></div></div>
+        <button id="account-settings" class="icon-btn" aria-label="Account security" title="Account security"><span data-icon="settings"></span></button><button id="logout" class="icon-btn" aria-label="Sign out" title="Sign out"><span data-icon="logout"></span></button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="mobile-brand"><img class="brand-symbol compact brand-image" src="./icon-192.png" alt="AI Teacher Intelligence"><strong>AI Teacher</strong></div>
+        <div class="topbar-title"><div class="eyebrow">Teacher workspace</div><h2 id="page-title">Today</h2></div>
+        <div class="topbar-actions">
+          <button id="app-back" class="secondary top-action icon-only" aria-label="Go back" title="Go back">←</button><button id="mobile-account" class="secondary top-action icon-only mobile-account" aria-label="Sign out" title="Sign out"><span data-icon="logout"></span></button><button id="global-add" class="primary top-action"><span data-icon="plus"></span><span class="action-label">Add</span></button>
+          <div id="connection-status" class="connection-status" aria-live="polite"></div><div id="service-status" class="service-status"><span class="status-dot"></span><span id="api-status">Checking…</span></div>
+        </div>
+      </header>
+      <section id="view" aria-live="polite"></section>
+    </main>
+  </div>
+
+  <div id="modal-root"></div>
+
+  <div id="camera-modal" class="modal hidden" aria-hidden="true">
+    <div class="modal-backdrop" data-close-camera></div>
+    <div class="modal-card camera-modal-card">
+      <div class="modal-head">
+        <div><div class="eyebrow">Rapid scan</div><h3>Scan answer sheet</h3><p class="muted small">Capture a paper, keep moving, and let AI process the queue. Paper order does not matter.</p></div>
+        <button class="icon-btn" data-close-camera aria-label="Close camera"><span data-icon="close"></span></button>
+      </div>
+      <div class="camera-stage">
+        <video id="camera-video" autoplay playsinline muted></video>
+        <div class="camera-guide"><span></span><span></span><span></span><span></span></div>
+        <div class="camera-status" id="camera-status">Camera ready</div>
+      </div>
+      <canvas id="camera-canvas" class="hidden"></canvas>
+      <div class="camera-actions">
+        <button id="capture-photo" class="primary xl"><span data-icon="scan"></span><span>Capture & process</span></button>
+        <button id="flip-camera" class="secondary" title="Switch camera"><span data-icon="flip"></span></button>
+      </div>
+      <div class="camera-bottom">
+        <label class="file-drop"><span data-icon="upload"></span><span><strong>Use an existing photo</strong><small>JPG, PNG or WEBP</small></span><input id="camera-file" type="file" accept="image/jpeg,image/png,image/webp" capture="environment"></label>
+        <div class="notice" id="camera-note">The AI reads the student's name/code from the sheet and matches it against this exam's class roster. Uncertain identity is never silently guessed.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mobile-nav" id="mobile-nav">
+    <button class="nav active" data-view="home"><span data-icon="home"></span><small>Today</small></button>
+    <button class="nav" data-view="students"><span data-icon="users"></span><small>Students</small></button>
+    <button class="nav" data-view="checker"><span data-icon="scan"></span><small>Checker</small></button>
+    <button class="nav" data-view="attendance"><span data-icon="calendar"></span><small>Attendance</small></button>
+    <button class="nav" data-view="settings"><span data-icon="settings"></span><small>Setup</small></button>
+  </div>
+
+<script>window.ATI_API_BASE="__ATI_API_BASE__";</script>
+<script src="./app.js"></script>
+</body>
+</html>

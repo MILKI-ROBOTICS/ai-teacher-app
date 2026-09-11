@@ -1,0 +1,23 @@
+{
+  "id": "/",
+  "name": "AI Teacher Intelligence",
+  "short_name": "AI Teacher",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone"],
+  "background_color": "#f4f7f9",
+  "theme_color": "#0b6e8e",
+  "description": "A secure, fast teacher workspace for students, assessments, attendance, reports and AI-assisted grading.",
+  "categories": ["education", "productivity"],
+  "prefer_related_applications": false,
+  "icons": [
+    {"src":"./icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},
+    {"src":"./icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
+  ],
+  "shortcuts": [
+    {"name":"Attendance","short_name":"Attendance","url":"/#attendance","icons":[{"src":"./icon-192.png","sizes":"192x192","type":"image/png"}]},
+    {"name":"Students","short_name":"Students","url":"/#students","icons":[{"src":"./icon-192.png","sizes":"192x192","type":"image/png"}]},
+    {"name":"AI Checker","short_name":"Checker","url":"/#checker","icons":[{"src":"./icon-192.png","sizes":"192x192","type":"image/png"}]}
+  ]
+}

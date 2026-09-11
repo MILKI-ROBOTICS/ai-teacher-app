@@ -1,0 +1,41 @@
+services:
+  - type: web
+    name: ai-teacher-app
+    runtime: python
+    plan: starter
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.11
+      - key: APP_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: ai-teacher-db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: SESSION_COOKIE_SECURE
+        value: "true"
+      - key: SESSION_COOKIE_NAME
+        value: __Host-ati_session
+      - key: SIGNUP_ENABLED
+        value: "true"
+      - key: ALLOW_DEMO_ACCOUNT
+        value: "false"
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GEMINI_MODEL
+        value: gemini-3.8-flash
+      - key: ALLOWED_ORIGINS
+        sync: false
+      - key: PUBLIC_APP_URL
+        sync: false
+      - key: UPLOAD_DIR
+        value: /var/data/uploads
+
+databases:
+  - name: ai-teacher-db
+    plan: starter
